@@ -1,0 +1,183 @@
+kiosk_mode:
+  non_admin_settings:
+    hide_sidebar: true
+  admin_settings:
+    hide_sidebar: false
+views:
+  - title: Plant 2
+    path: plant-2
+    type: panel
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:floorplan-card
+                full_height: true
+                config:
+                  image: /local/floorplan/drawing.svg
+                  stylesheet: /local/floorplan/examples/home/home.css
+                  console_log_level: debug
+                  defaults:
+                    hover_action: hover-info
+                  rules:
+                    - entity: input_boolean.filter_1_pressure
+                      state_action:
+                        action: call-service
+                        service: floorplan.style_set
+                        service_data:
+                          style: >
+                            fill: ${ entity.state === "on" ? "#ff0000" :
+                            "#00ff00" };
+                    - element: input_boolean.filter_1_pressure
+                      entites:
+                        - sensor.bmp280_pressure
+                        - sensor.bmp280_temperature
+                      hover_action: hover-info
+                    - element: input_boolean.filter_1_pressure
+                      entity: sensor.bmp280_pressure
+                      tap_action:
+                        action: fire-dom-event
+                        browser_mod:
+                          command: popup
+                          title: Filter 1 Pressure
+                          card:
+                            type: iframe
+                            url: >-
+                              http://homeassistant.local:3000/api/hassio_ingress/w6jGNtvWdX4WQf_WRjo-2xzxEYREP6jS-dSqNcjDNHk/d-solo/NBCWaG4nk/air-filters?orgId=1&theme=light&panelId=2
+                            aspect_ratio: 65%
+                    - element: oven
+                      entity: input_boolean.oven_on
+                      state_action:
+                        action: call-service
+                        service: floorplan.style_set
+                        service_data:
+                          style: >
+                            fill: ${ entity.state === "on" ? "#00ff00" :
+                            "#ff0000" };
+                      tap_action:
+                        action: fire-dom-event
+                        browser_mod:
+                          command: popup
+                          title: Cure Oven
+                          card:
+                            type: iframe
+                            url: >-
+                              http://homeassistant.local:3000/api/hassio_ingress/w6jGNtvWdX4WQf_WRjo-2xzxEYREP6jS-dSqNcjDNHk/d/AXwYeianz/cure-oven?orgId=1&theme=light&refresh=30s&kiosk
+                            aspect_ratio: 100%
+                          large: true
+                    - element: washplant
+                      entity: input_boolean.wash_plant_on
+                      state_action:
+                        action: call-service
+                        service: floorplan.style_set
+                        service_data:
+                          style: >
+                            fill: ${ entity.state === "on" ? "#00ff00" :
+                            "#ff0000" };
+                      tap_action:
+                        action: fire-dom-event
+                        browser_mod:
+                          command: popup
+                          title: Wash Plant
+                          card:
+                            type: iframe
+                            url: >-
+                              http://homeassistant.local:3000/api/hassio_ingress/w6jGNtvWdX4WQf_WRjo-2xzxEYREP6jS-dSqNcjDNHk/d/pomweoJnk/wash-plant?orgId=1&theme=light&refresh=30s&kiosk
+                            aspect_ratio: 100%
+                          large: true
+                    - element: autobooth
+                      entity: input_boolean.autobooth_on
+                      state_action:
+                        action: call-service
+                        service: floorplan.style_set
+                        service_data:
+                          style: >
+                            fill: ${ entity.state === "on" ? "#00ff00" :
+                            "#ff0000" };
+                      tap_action:
+                        action: fire-dom-event
+                        browser_mod:
+                          command: popup
+                          title: Auto Booth
+                          card:
+                            type: iframe
+                            url: >-
+                              http://homeassistant.local:3000/api/hassio_ingress/w6jGNtvWdX4WQf_WRjo-2xzxEYREP6jS-dSqNcjDNHk/d/i4RU6ma7k/auto-booth?orgId=1&theme=light&refresh=30s&kiosk
+                            aspect_ratio: 100%
+                          large: true
+                    - element: dryer
+                      entity: input_boolean.dryer_on
+                      state_action:
+                        action: call-service
+                        service: floorplan.style_set
+                        service_data:
+                          style: >
+                            fill: ${ entity.state === "on" ? "#00ff00" :
+                            "#ff0000" };
+                      tap_action:
+                        action: fire-dom-event
+                        browser_mod:
+                          command: popup
+                          title: Dry Off Oven
+                          card:
+                            type: iframe
+                            url: >-
+                              http://homeassistant.local:3000/api/hassio_ingress/w6jGNtvWdX4WQf_WRjo-2xzxEYREP6jS-dSqNcjDNHk/d/a62w6TJnk/dry-off-oven?orgId=1&theme=light&refresh=30s&kiosk
+                            aspect_ratio: 100%
+                          large: true
+                    - element: manualbooth
+                      entity: input_boolean.manual_booth_on
+                      state_action:
+                        action: call-service
+                        service: floorplan.style_set
+                        service_data:
+                          style: >
+                            fill: ${ entity.state === "on" ? "#00ff00" :
+                            "#ff0000" };
+                      tap_action:
+                        action: fire-dom-event
+                        browser_mod:
+                          command: popup
+                          title: Manual Booth
+                          card:
+                            type: iframe
+                            url: >-
+                              http://homeassistant.local:3000/api/hassio_ingress/w6jGNtvWdX4WQf_WRjo-2xzxEYREP6jS-dSqNcjDNHk/d/XDMq6i-nk/manual-booth?orgId=1&theme=light&refresh=30s&kiosk
+                            aspect_ratio: 100%
+                          large: true
+                    - element: paintline
+                      entity: input_boolean.paint_line_on
+                      state_action:
+                        action: call-service
+                        service: floorplan.style_set
+                        service_data:
+                          style: >
+                            fill: ${ entity.state === "on" ? "#00ff00" :
+                            "#ff0000" };
+                      tap_action:
+                        action: fire-dom-event
+                        browser_mod:
+                          command: popup
+                          title: Paint Line Conveyor
+                          card:
+                            type: iframe
+                            url: >-
+                              http://homeassistant.local:3000/api/hassio_ingress/w6jGNtvWdX4WQf_WRjo-2xzxEYREP6jS-dSqNcjDNHk/d/7a_u6iank/paint-line-conveyor?orgId=1&theme=light&refresh=30s&kiosk
+                            aspect_ratio: 100%
+                          large: true
+  - title: Plant 1
+    path: plant-1
+    type: panel
+    badges: []
+    cards: []
+  - theme: Backend-selected
+    title: Runtime Report Generator
+    path: Runtime Report Generator
+    badges: []
+    cards:
+      - type: iframe
+        url: http://homeassistant.local:1880/endpoint/ui/
+        aspect_ratio: 75%
+title: Sensors
