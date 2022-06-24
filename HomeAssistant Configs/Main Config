@@ -1,0 +1,103 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+influxdb:
+    username: homeassistant
+    password: homeassistant
+    
+browser_mod:
+    disable:
+    - all
+
+shell_command:
+    influxbackup: /config/influxbackup.sh
+    
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /config
+      - type: memory_free
+      - type: memory_use
+      - type: swap_use_percent
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+      - type: processor_use
+      - type: processor_temperature
+      
+  - platform: template 
+    sensors:
+       air_pressure_gauge:
+        value_template: "{{(state_attr('weather.safety_rail_company', 'pressure')|float - 14.7)|float * 27.708}}"
+        friendly_name: 'Gauge Air Pressure'
+        unit_of_measurement: 'inH2O'
+
+# HISTORY STAT SENSORS
+  - platform: history_stats
+    name: Paint Line On
+    entity_id: input_boolean.paint_line_on
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Wash Plant On
+    entity_id: input_boolean.wash_plant_on
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Dry Off Oven On
+    entity_id: input_boolean.dryer_on
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+
+  - platform: history_stats
+    name: Cure Oven On
+    entity_id: input_boolean.oven_on
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Auto Booth On
+    entity_id: input_boolean.autobooth_on
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Manual Booth On
+    entity_id: input_boolean.manual_booth_on
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+    end: '{{ now() }}'
+
+# MQTT SENSORS
+#  - platform: mqtt
+#    name: "Current Monitor 1"
+#    state_topic: "gateway/94:3C:C6:8C:3C:B4/sensor/00:13:A2:00:41:BA:80:DD"
+#    unit_of_measurement: "A"
+#    device_class: "current"
+#    value_template: "{{ value_json.channel_1_amps }}"
+#  - platform: mqtt
+#    name: "Current Monitor 2"
+#    state_topic: "gateway/94:3C:C6:8C:3C:B4/sensor/00:13:A2:00:41:BA:80:DD"
+#    unit_of_measurement: "A"
+#    device_class: "current"
+#    value_template: "{{ value_json.channel_2_amps }}"
